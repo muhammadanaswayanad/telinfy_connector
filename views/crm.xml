@@ -26,6 +26,11 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
+            <!-- Add fields first -->
+            <xpath expr="//form" position="inside">
+                <field name="has_unread_whatsapp" invisible="1"/>
+            </xpath>
+            
             <xpath expr="//notebook" position="inside">
                 <page string="WhatsApp Messages" name="whatsapp_messages">
                     <field name="whatsapp_message_ids" readonly="1">
