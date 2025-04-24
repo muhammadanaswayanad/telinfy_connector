@@ -9,11 +9,11 @@
                 <field name="has_unread_whatsapp"/>
                 <field name="whatsapp_message_count"/>
             </field>
-            <div name="div_feedback" position="after">
-                <div t-if="record.has_unread_whatsapp.raw_value" class="float-end">
+            <xpath expr="//div[hasclass('oe_kanban_content')]//div[hasclass('o_kanban_record_top')]" position="inside">
+                <div t-if="record.has_unread_whatsapp.raw_value" class="float-end ms-auto">
                     <span class="badge rounded-pill text-bg-success" t-out="record.whatsapp_message_count.value + ' 💬'"/>
                 </div>
-            </div>
+            </xpath>
         </field>
     </record>
 
