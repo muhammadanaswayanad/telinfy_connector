@@ -43,9 +43,10 @@ class TelinfyApi(http.Controller):
                         })
                         _logger.info(f'Lead {lead_name}, {from_number} created successfully!')
                     # Add message to chatter
-                    lead.write({'has_unread_whatsapp': True})
-                    lead.message_post(body=f"WhatsApp Message: {message['text']['body']}")
-                    
+                    msg = lead.message_post(body=f"WhatsApp Message: {message['text']['body']}")
+                    msg.whatsapp_message = True  # Mark as WhatsApp message
+                    lead.has_unread_whatsapp = True
+
                     # Send notification to assigned salesperson
                     if lead.user_id:
                         lead.message_subscribe([lead.user_id.partner_id.id])

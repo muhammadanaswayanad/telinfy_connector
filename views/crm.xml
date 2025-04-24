@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Kanban View -->
     <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
         <field name="name">crm.lead.kanban.inherit</field>
         <field name="model">crm.lead</field>
@@ -7,12 +8,35 @@
         <field name="arch" type="xml">
             <xpath expr="//templates" position="before">
                 <field name="has_unread_whatsapp"/>
-                <field name="show_whatsapp_indicator"/>
+                <field name="whatsapp_message_count"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_kanban_content')]" position="inside">
-                <div t-if="record.show_whatsapp_indicator.value" class="float-end">
-                    <span class="badge rounded-pill text-bg-success">💬</span>
-                </div>
+                <t t-if="record.has_unread_whatsapp.raw_value">
+                    <div class="float-end">
+                        <span class="badge rounded-pill text-bg-success" t-out="record.whatsapp_message_count.value + ' 💬'"/>
+                    </div>
+                </t>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="WhatsApp Messages" name="whatsapp_messages">
+                    <field name="whatsapp_message_ids" readonly="1">
+                        <tree>
+                            <field name="date"/>
+                            <field name="body"/>
+                            <field name="author_id"/>
+                        </tree>
+                    </field>
+                    <button name="mark_whatsapp_read" string="Mark as Read" type="object" class="btn-primary" attrs="{'invisible': [('has_unread_whatsapp', '=', False)]}"/>
+                </page>
             </xpath>
         </field>
     </record>
