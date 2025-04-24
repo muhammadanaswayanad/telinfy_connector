@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <field name="activity_ids" position="after">
+                <field name="has_unread_whatsapp"/>
+                <field name="whatsapp_message_count"/>
+            </field>
+            <div name="div_feedback" position="after">
+                <div t-if="record.has_unread_whatsapp.raw_value" class="float-end">
+                    <span class="badge rounded-pill text-bg-success" t-out="record.whatsapp_message_count.value + ' 💬'"/>
+                </div>
+            </div>
+        </field>
+    </record>
+
     <!-- Search View -->
     <record id="crm_case_search_view_leads_inherit" model="ir.ui.view">
         <field name="name">crm.lead.search.inherit</field>
