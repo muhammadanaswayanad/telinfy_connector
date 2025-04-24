@@ -48,12 +48,15 @@ class TelinfyApi(http.Controller):
                         # Post message with proper user context
                         if lead:
                             with request.env.cr.savepoint():
-                                msg_values = {
-                                    'body': f"WhatsApp Message: {message['text']['body']}",
-                                    'message_type': 'comment',
+                                # Post message without whatsapp flag first
+                                msg = lead.with_user(superuser).message_post(
+                                    body=f"WhatsApp Message: {message['text']['body']}",
+                                    message_type='comment'
+                                )
+                                # Update message with whatsapp flag
+                                request.env['mail.message'].sudo().browse(msg.id).write({
                                     'whatsapp_message': True
-                                }
-                                lead.with_user(superuser).message_post(**msg_values)
+                                })
                                 lead.has_unread_whatsapp = True
                                 _logger.info(f'Message posted to lead {lead_name}')
                     else:
