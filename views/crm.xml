@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_case_kanban_view_leads_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//templates" position="before">
+                <field name="has_unread_whatsapp"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_kanban_content')]" position="inside">
+                <div attrs="{'invisible': [('has_unread_whatsapp', '=', False)]}" class="float-end">
+                    <span class="badge rounded-pill text-bg-success">💬</span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
