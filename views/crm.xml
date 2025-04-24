@@ -35,7 +35,12 @@
                             <field name="author_id"/>
                         </tree>
                     </field>
-                    <button name="mark_whatsapp_read" string="Mark as Read" type="object" class="btn-primary" attrs="{'invisible': [('has_unread_whatsapp', '=', False)]}"/>
+                    <button 
+                        name="mark_whatsapp_read" 
+                        string="Mark as Read" 
+                        type="object" 
+                        class="btn-primary"
+                        invisible="not has_unread_whatsapp"/>
                 </page>
             </xpath>
         </field>
