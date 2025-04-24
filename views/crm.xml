@@ -7,9 +7,10 @@
         <field name="arch" type="xml">
             <xpath expr="//templates" position="before">
                 <field name="has_unread_whatsapp"/>
+                <field name="show_whatsapp_indicator"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_kanban_content')]" position="inside">
-                <div attrs="{'invisible': [('has_unread_whatsapp', '=', False)]}" class="float-end">
+                <div t-if="record.show_whatsapp_indicator.value" class="float-end">
                     <span class="badge rounded-pill text-bg-success">💬</span>
                 </div>
             </xpath>
