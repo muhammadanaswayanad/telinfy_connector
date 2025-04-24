@@ -9,8 +9,8 @@
                 <field name="has_unread_whatsapp"/>
                 <field name="whatsapp_message_count"/>
             </field>
-            <xpath expr="//templates/t/div/div[1]" position="inside">
-                <div t-if="record.has_unread_whatsapp.raw_value" class="float-end">
+            <xpath expr="//templates//field[@name='user_id']" position="before">
+                <div t-if="record.has_unread_whatsapp.raw_value" class="mb-1">
                     <span class="badge rounded-pill text-bg-success" t-out="record.whatsapp_message_count.value + ' 💬'"/>
                 </div>
             </xpath>
